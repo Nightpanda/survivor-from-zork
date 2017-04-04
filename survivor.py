@@ -3,12 +3,6 @@ board = [[1, 1, 1, 1],
          [1, 1, 1, 1],
          [1, 1, 1, 1]]
 
-def legalMovesWizard():
-    if gameStart is True:
-        return []
-    else:
-        return []
-
 def drawBoard():
     for row in board:
         print row
@@ -22,6 +16,37 @@ def findChar(char):
         except ValueError:
             pass
 
+def wizardUp(x, y, side):
+    return [(x + 1 * side), (y + 2)]
+
+def wizardLeft(x, y, side):
+    return [(x - 2), (y + 1 * side)]
+
+def wizardRight(x, y, side):
+    return [(x + 2), (y + 1 * side)]
+
+def wizardDown(x, y, side):
+    return [(x + 1 * side), (y - 2)]
+
+def isMoveLegalWizard(curPos, move):
+    moves = []
+    location = curPos
+    locationX = location[0]
+    locationY = location[1]
+    move = move.split(',')
+    moveX = int(move[0])
+    moveY = int(move[1])
+    moves.append(wizardUp(locationX, locationY, 1))
+    moves.append(wizardUp(locationX, locationY, -1))
+    moves.append(wizardDown(locationX, locationY, 1))
+    moves.append(wizardDown(locationX, locationY, -1))
+    moves.append(wizardLeft(locationX, locationY, 1))
+    moves.append(wizardLeft(locationX, locationY, -1))
+    moves.append(wizardRight(locationX, locationY, 1))
+    moves.append(wizardRight(locationX, locationY, -1))
+    legalMoves = filter(lambda x: 4 > x[0] >= 0 and 4 > x[1] >= 0, moves)
+    print legalMoves
+
 def changeBoard(position, char):
     position = position.split(',')
     posX = int(position[0])
@@ -29,12 +54,13 @@ def changeBoard(position, char):
     board[posX][posY] = char
 
 def moveChar(char):
+    curPos = findChar(char)
     if char=='W':
         move=raw_input("Where to move Wizard?")
+        isMoveLegalWizard(curPos, move)
+        board[curPos[0]][curPos[1]] = 0
     elif char=='M':
         move=raw_input("Where to move Mage?")
-    curPos = findChar(char)
-    board[curPos[0]][curPos[1]] = 0
     madeMove = move.split(',')
     if board[int(madeMove[0])][int(madeMove[1])] == 0:
         print char + ' Lost the game!'
