@@ -52,6 +52,7 @@ def changeBoard(position, char):
     posX = int(position[0])
     posY = int(position[1])
     board[posX][posY] = char
+    return board
 
 def moveChar(char):
     curPos = findChar(char)
@@ -67,17 +68,22 @@ def moveChar(char):
         #TODO: Call ending game here
     changeBoard(move, char)
 
-gameOn=True
-drawBoard()
-move=raw_input("Where does the Wizard start?")
-changeBoard(move, 'W')
-drawBoard()
-move=raw_input("Where does the Mage start?")
-changeBoard(move, 'M')
-drawBoard()
+def main():
+	gameOn=True
+	drawBoard()
+	move=raw_input("Where does the Wizard start?")
+	changeBoard(move, 'W')
+	drawBoard()
+	move=raw_input("Where does the Mage start?")
+	changeBoard(move, 'M')
+	drawBoard()
 
-while gameOn:
-    moveChar('W')
-    drawBoard()
-    moveChar('M')
-    drawBoard()
+	while gameOn:
+	    moveChar('W')
+	    drawBoard()
+	    moveChar('M')
+	    drawBoard()
+
+
+if __name__ == "__main__":
+   main()
