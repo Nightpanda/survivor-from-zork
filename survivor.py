@@ -49,9 +49,8 @@ def wizardDown(x, y, side):
 
 def wizardLegalMovesFor(currentPosition):
     moves = []
-    location = currentPosition.split(',')
-    locationX = int(location[0])
-    locationY = int(location[1])
+    locationX = currentPosition[0]
+    locationY = currentPosition[1]
     moves.append(wizardUp(locationX, locationY, 1))
     moves.append(wizardUp(locationX, locationY, -1))
     moves.append(wizardDown(locationX, locationY, 1))
@@ -81,19 +80,29 @@ def changeBoard(position, char):
     board[posX][posY] = char
     return board
 
+def endGame(char):
+    print char + ' Lost the game!'
+    sys.exit()
+
 def moveChar(char):
     curPos = findChar(char)
     if char=='W':
         move=raw_input("Where to move Wizard?")
-        isMoveLegalWizard(curPos, move)
-        board[curPos[0]][curPos[1]] = 0
+        if isMoveLegalWizard(curPos, move):
+            board[curPos[0]][curPos[1]] = 0
+        else:
+            endGame(char)
     elif char=='M':
         move=raw_input("Where to move Mage?")
+        if isMoveLegalMage(move, board):
+            board[curPos[0]][curPos[1]] = 0
+        else:
+            endGame(char)
     madeMove = move.split(',')
     if board[int(madeMove[0])][int(madeMove[1])] == 0:
-        print char + ' Lost the game!'
-        sys.exit()
-    changeBoard(move, char)
+        endGame(char)
+    else:
+        changeBoard(move, char)
 
 def main():
 	gameOn=True
