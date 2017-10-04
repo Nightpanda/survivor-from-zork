@@ -9,6 +9,12 @@ def drawBoard():
     for row in board:
         print row
 
+def moveToCoordinates(move):
+    move = move.split(',')
+    moveX = int(move[0])
+    moveY = int(move[1])
+    return [moveX,moveY]
+
 def findChar(char):
     for index, val in enumerate(board):
         locationX = index
@@ -57,11 +63,16 @@ def wizardLegalMovesFor(currentPosition):
     return filter(None, moves)
 
 def isMoveLegalWizard(curPos, move):
-    move = move.split(',')
-    moveX = int(move[0])
-    moveY = int(move[1])
     legalMoves = wizardLegalMovesFor(curPos)
-    return [moveX, moveY] in legalMoves
+    return moveToCoordinates(move) in legalMoves
+
+def isMoveLegalMage(move, board):
+    coordinates = moveToCoordinates(move)
+    charAtLocation = board[coordinates[0]][coordinates[1]]
+    if charAtLocation == 0 or charAtLocation == 'W':
+        return False
+    else:
+        return True
 
 def changeBoard(position, char):
     position = position.split(',')

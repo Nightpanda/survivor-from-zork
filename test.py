@@ -1,5 +1,5 @@
 import unittest
-from survivor import changeBoard, wizardLegalMovesFor, isCoordinateOutsideGrid, isMoveLegalWizard
+from survivor import changeBoard, wizardLegalMovesFor, isCoordinateOutsideGrid, isMoveLegalWizard, isMoveLegalMage, moveToCoordinates
 
 board = [[1, 1, 1, 1],
 	[1, 1, 1, 1],
@@ -26,6 +26,23 @@ class TestClass(unittest.TestCase):
     def test_isMoveLegalWizard(self):
         self.assertEquals(isMoveLegalWizard('0,0', '1,1'), False)
         self.assertEquals(isMoveLegalWizard('0,0', '2,1'), True)
+
+    def test_isMoveLegalMage(self):
+        boardWithHoles = [[0, 1, 1, 1],
+	                  [1, 1, 0, 1],
+	                  ['W', 0, 1, 1],
+	                  [0, 1, 0, 1]]
+        self.assertEquals(isMoveLegalMage('0,0', boardWithHoles), False)
+        self.assertEquals(isMoveLegalMage('0,1', boardWithHoles), True)
+        self.assertEquals(isMoveLegalMage('0,2', boardWithHoles), True)
+        self.assertEquals(isMoveLegalMage('1,0', boardWithHoles), True)
+        self.assertEquals(isMoveLegalMage('0,1', boardWithHoles), True)
+        self.assertEquals(isMoveLegalMage('0,1', boardWithHoles), True)
+
+    def test_moveToCoordinates(self):
+        self.assertEquals(moveToCoordinates('0,0'), [0,0])
+        self.assertEquals(moveToCoordinates('2,3'), [2,3])
+
 
 if __name__ == '__main__':
 	unittest.main()
