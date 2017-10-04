@@ -1,3 +1,5 @@
+import sys
+
 board = [[1, 1, 1, 1],
          [1, 1, 1, 1],
          [1, 1, 1, 1],
@@ -65,7 +67,7 @@ def moveChar(char):
     madeMove = move.split(',')
     if board[int(madeMove[0])][int(madeMove[1])] == 0:
         print char + ' Lost the game!'
-        #TODO: Call ending game here
+        sys.exit()
     changeBoard(move, char)
 
 def main():
