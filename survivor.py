@@ -9,7 +9,7 @@ def drawBoard():
     for row in board:
         print row
 
-def moveToCoordinates(move):
+def moveStringToCoordinates(move):
     move = move.split(',')
     moveX = int(move[0])
     moveY = int(move[1])
@@ -63,10 +63,10 @@ def wizardLegalMovesFor(currentPosition):
 
 def isMoveLegalWizard(curPos, move):
     legalMoves = wizardLegalMovesFor(curPos)
-    return moveToCoordinates(move) in legalMoves
+    return moveStringToCoordinates(move) in legalMoves
 
 def isMoveLegalMage(move, board):
-    coordinates = moveToCoordinates(move)
+    coordinates = moveStringToCoordinates(move)
     charAtLocation = board[coordinates[0]][coordinates[1]]
     if charAtLocation == 0 or charAtLocation == 'W':
         return False
@@ -77,7 +77,7 @@ def changeBoard(position, char):
     position = position.split(',')
     posX = int(position[0])
     posY = int(position[1])
-    board[posX][posY] = char
+    board[posY][posX] = char
     return board
 
 def endGame(char):
@@ -87,30 +87,26 @@ def endGame(char):
 def moveChar(char):
     curPos = findChar(char)
     if char=='W':
-        move=raw_input("Where to move Wizard?")
+        move=raw_input("Where to move Wizard? x,y:")
         if isMoveLegalWizard(curPos, move):
             board[curPos[0]][curPos[1]] = 0
         else:
             endGame(char)
     elif char=='M':
-        move=raw_input("Where to move Mage?")
+        move=raw_input("Where to move Mage? x,y")
         if isMoveLegalMage(move, board):
             board[curPos[0]][curPos[1]] = 0
         else:
             endGame(char)
-    madeMove = move.split(',')
-    if board[int(madeMove[0])][int(madeMove[1])] == 0:
-        endGame(char)
-    else:
-        changeBoard(move, char)
+    changeBoard(move, char)
 
 def main():
 	gameOn=True
 	drawBoard()
-	move=raw_input("Where does the Wizard start?")
+	move=raw_input("Where does the Wizard start? x,y:")
 	changeBoard(move, 'W')
 	drawBoard()
-	move=raw_input("Where does the Mage start?")
+	move=raw_input("Where does the Mage start? x,y:")
 	changeBoard(move, 'M')
 	drawBoard()
 

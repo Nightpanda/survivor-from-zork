@@ -1,5 +1,5 @@
 import unittest
-from survivor import changeBoard, wizardLegalMovesFor, isCoordinateOutsideGrid, isMoveLegalWizard, isMoveLegalMage, moveToCoordinates
+from survivor import changeBoard, wizardLegalMovesFor, isCoordinateOutsideGrid, isMoveLegalWizard, isMoveLegalMage, moveStringToCoordinates
 
 board = [[1, 1, 1, 1],
 	[1, 1, 1, 1],
@@ -39,9 +39,9 @@ class TestClass(unittest.TestCase):
         self.assertEquals(isMoveLegalMage('0,1', boardWithHoles), True)
         self.assertEquals(isMoveLegalMage('0,1', boardWithHoles), True)
 
-    def test_moveToCoordinates(self):
-        self.assertEquals(moveToCoordinates('0,0'), [0,0])
-        self.assertEquals(moveToCoordinates('2,3'), [2,3])
+    def test_moveStringToCoordinates(self):
+        self.assertEquals(moveStringToCoordinates('0,0'), [0,0])
+        self.assertEquals(moveStringToCoordinates('2,3'), [2,3])
 
 
 if __name__ == '__main__':
