@@ -18,26 +18,34 @@ def findChar(char):
         except ValueError:
             pass
 
+def isCoordinateOutsideGrid(move):
+    return len([coordinate for coordinate in move if not (coordinate < 0 or coordinate > 3) ]) < 2
+
 def wizardUp(x, y, side):
-    return [(x + 1 * side), (y + 2)]
+    endLocation = [(x + 1 * side), (y + 2)]
+    if not isCoordinateOutsideGrid(endLocation):
+        return endLocation
 
 def wizardLeft(x, y, side):
-    return [(x - 2), (y + 1 * side)]
+    endLocation = [(x - 2), (y + 1 * side)]
+    if not isCoordinateOutsideGrid(endLocation):
+        return endLocation
 
 def wizardRight(x, y, side):
-    return [(x + 2), (y + 1 * side)]
+    endLocation = [(x + 2), (y + 1 * side)]
+    if not isCoordinateOutsideGrid(endLocation):
+        return endLocation
 
 def wizardDown(x, y, side):
-    return [(x + 1 * side), (y - 2)]
+    endLocation = [(x + 1 * side), (y - 2)]
+    if not isCoordinateOutsideGrid(endLocation):
+        return endLocation
 
-def isMoveLegalWizard(curPos, move):
+def wizardLegalMovesFor(currentPosition):
     moves = []
-    location = curPos
-    locationX = location[0]
-    locationY = location[1]
-    move = move.split(',')
-    moveX = int(move[0])
-    moveY = int(move[1])
+    location = currentPosition.split(',')
+    locationX = int(location[0])
+    locationY = int(location[1])
     moves.append(wizardUp(locationX, locationY, 1))
     moves.append(wizardUp(locationX, locationY, -1))
     moves.append(wizardDown(locationX, locationY, 1))
@@ -46,8 +54,14 @@ def isMoveLegalWizard(curPos, move):
     moves.append(wizardLeft(locationX, locationY, -1))
     moves.append(wizardRight(locationX, locationY, 1))
     moves.append(wizardRight(locationX, locationY, -1))
-    legalMoves = filter(lambda x: 4 > x[0] >= 0 and 4 > x[1] >= 0, moves)
-    print legalMoves
+    return filter(None, moves)
+
+def isMoveLegalWizard(curPos, move):
+    move = move.split(',')
+    moveX = int(move[0])
+    moveY = int(move[1])
+    legalMoves = wizardLegalMovesFor(curPos)
+    return [moveX, moveY] in legalMoves
 
 def changeBoard(position, char):
     position = position.split(',')
